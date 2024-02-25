@@ -1,18 +1,30 @@
 <script setup lang="ts">
+import {  ref } from 'vue'
 import { useRoute } from 'vue-router'
 import sourceData from '@/data.json'
-import { computed } from 'vue';
 
 const route = useRoute()
+const destination = ref({} as (typeof sourceData.destinations)[0])
 
-const destination = computed(() => {
-  const id = +route.params.id
-  return sourceData.destinations.find(item => item.id === id)
-})
+const fetchData = async () => {
+  const slug = route.params.slug as string
+  try {
+    const response = await fetch(
+      `https://travel-dummy-api.netlify.app/${slug}.json`
+    )
+    const data = await response.json()
+    destination.value = data
+    return data
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+fetchData()
 </script>
 
 <template>
-  <section class="destination">
+  <section v-if="destination.image" class="destination">
     <h1>{{ destination?.name }}</h1>
     <div class="destination-details">
       <img :src="`/images/${destination?.image}`" :alt="destination?.name" />
