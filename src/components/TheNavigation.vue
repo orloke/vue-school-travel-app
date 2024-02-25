@@ -9,7 +9,7 @@ const destinations = sourceData.destinations
     <router-link
       v-for="destination in destinations"
       :key="destination.id"
-      :to="`/destination/${destination.id}`"
+      :to="`/destination/${destination.id}/${destination.slug}`"
       >{{ destination.name }}</router-link
     >
   </div>

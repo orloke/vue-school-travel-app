@@ -11,7 +11,7 @@ const destinations = sourceData.destinations
       <router-link
         v-for="destination in destinations"
         :key="destination.id"
-        :to="`/destination/${destination.id}`"
+        :to="`/destination/${destination.id}/${destination.slug}`"
       >
         <h2>{{ destination.name }}</h2>
         <img :src="`/images/${destination.image}`" :alt="destination.name" />
